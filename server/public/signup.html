@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Signup Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0px;
+        background-color: #070707;
+        width: 100vw;
+        height: 100%;
+        text-align: center;
+      }
+
+      h1 {
+        color: #f2f2f2;
+      }
+
+      form {
+        width: 500px;
+        margin: 20px auto;
+        padding: 30px;
+        background-color: #f2f2f2;
+        border-radius: 4px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Signup</h1>
+    <form id="signupForm" method="POST" action="/signup">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required /><br /><br />
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+      /><br /><br />
+      <input type="submit" value="Signup" />
+    </form>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const response = await axios.post("/signup", {
+              username,
+              password,
+            });
+
+            const data = response.data;
+            if (response.status === 201) {
+              window.location.href = "/login.html";
+            } else {
+              alert(data.message); // signup failed
+            }
+          } catch (error) {
+            console.error("Error:", error);
+          }
+        });
+    </script>
+  </body>
+</html>
